@@ -15,7 +15,7 @@ export default function App () {
         <Searchbar />
         <Modal items={items} setItems={setItems} groupName={groupName} setGroupName={setGroupName} />
       </div>
-      <Dropdown setGroupName={setGroupName} />
+      <Dropdown setGroupName={setGroupName} dropdownName={'List of Groups'}/>
       <ItemsContainer items={items}/>
     </>
   )

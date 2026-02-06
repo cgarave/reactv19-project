@@ -48,7 +48,7 @@ const Modal = ({ items, setItems, groupName, setGroupName }) => {
                     </form>
                     <h3 className="font-bold text-lg">Add Item</h3>
                     <div className="my-2">
-                        <Dropdown setGroupName={setGroupName}/>
+                        <Dropdown setGroupName={setGroupName} dropdownName={'Group'}/>
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend font-medium">Item Name</legend>
                             <input type="text" className="input w-full" placeholder="Type here" onChange={itemNameInput} value={itemName}/>

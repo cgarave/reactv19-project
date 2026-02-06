@@ -1,10 +1,10 @@
-const Dropdown = ({ setGroupName }) => {
+const Dropdown = ({ setGroupName, dropdownName }) => {
     const selectedGroup = (e) => {
         setGroupName(e.target.value);
     }
     return (
         <div>
-            <legend className="fieldset-legend font-medium text-xs">Groups</legend>
+            <legend className="fieldset-legend font-medium text-xs">{dropdownName}</legend>
             <select className="select mt-2 w-full outline-0" required={true} onChange={selectedGroup}>
                 <option value={'all'}>All</option>
                 <option value={'softdrinks'}>Softdrinks</option>
