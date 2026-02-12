@@ -7,7 +7,7 @@ import Modal from './Modal'
 
 export default function App () {
   const [items, setItems] = useState([]); // this will handle the item details coming from modal
-  const [groupName, setGroupName] = useState('');
+  const [groupName, setGroupName] = useState('all');
 
   return (
     <>
@@ -15,8 +15,8 @@ export default function App () {
         <Searchbar />
         <Modal items={items} setItems={setItems} groupName={groupName} setGroupName={setGroupName} />
       </div>
-      <Dropdown setGroupName={setGroupName} dropdownName={'List of Groups'}/>
-      <ItemsContainer items={items}/>
+      <Dropdown groupName={groupName} setGroupName={setGroupName} dropdownName={'Sort products'}/>
+      <ItemsContainer items={items} setItems={setItems}/>
     </>
   )
 }

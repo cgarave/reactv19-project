@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Dropdown from "./Dropdown"
 
 const Modal = ({ items, setItems, groupName, setGroupName }) => {
@@ -21,8 +21,19 @@ const Modal = ({ items, setItems, groupName, setGroupName }) => {
         setBasePrice(e.target.value);
     }
 
+    const modalRef = useRef(null);
+
+    let savedItems = []
+    if(items.length > 0) {
+        for(let i = 0; i < items.length; i++){
+            savedItems = [...savedItems, items[i].itemName]
+        }
+    }
+
     function addItem() {
-        if(itemName !== '') {
+        console.log(savedItems);
+        
+        if(itemName !== '' && !savedItems.includes(itemName)) {
             setItems([...items, {
                 groupName: groupName,
                 itemName: itemName,
@@ -31,12 +42,17 @@ const Modal = ({ items, setItems, groupName, setGroupName }) => {
                 basePrice: basePrice,
                 id: crypto.randomUUID(),
             }])
+
+            setItemName('');
+            setRetailPrice(0);
+            setWholesalePrice(0);
+            setBasePrice(0);
+            modalRef.current.click(); // closes the modal
+        } else if (savedItems.includes(itemName)) {
+            console.log('item is already added');
         }
-        setItemName('')
-        setRetailPrice(0)
-        setWholesalePrice(0)
-        setBasePrice(0)
     }
+
     return (
         <>
             <button className="btn bg-amber-400 text-black" onClick={() => document.getElementById('my_modal_3').showModal()}>Add New Item</button>
@@ -44,11 +60,11 @@ const Modal = ({ items, setItems, groupName, setGroupName }) => {
                 <div className="modal-box">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" ref={modalRef}>✕</button>
                     </form>
                     <h3 className="font-bold text-lg">Add Item</h3>
                     <div className="my-2">
-                        <Dropdown setGroupName={setGroupName} dropdownName={'Group'}/>
+                        <Dropdown groupName={groupName} setGroupName={setGroupName} dropdownName={'Group'}/>
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend font-medium">Item Name</legend>
                             <input type="text" className="input w-full" placeholder="Type here" onChange={itemNameInput} value={itemName}/>

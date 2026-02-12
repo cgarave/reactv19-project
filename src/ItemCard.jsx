@@ -6,7 +6,7 @@ const ItemCard = ({ groupName, itemName, retailPrice, wholesalePrice, basePrice 
                 <p>Retail Price: {retailPrice}</p>
                 <p>Wholesale Price: {wholesalePrice}</p>
                 <p>Base Price: {basePrice}</p>
-                <h4 className="px-2 bg-sky-500 rounded-xl w-fit" >{groupName}</h4>
+                <h4 className="px-2 bg-emerald-600 rounded-full w-fit text-white">{groupName}</h4>
             </div>
         </div>
     )
