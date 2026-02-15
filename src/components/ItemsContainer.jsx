@@ -1,9 +1,9 @@
 import ItemCard from './ItemCard'
-import { dummyData } from './assets/items.jsx'
+import { dummyData } from '../assets/items.jsx'
 
 const ItemsContainer = ({ items }) => {
   return (
-    <div className='grid grid-cols-2 gap-4 mt-2'>
+    <div className='grid grid-cols-2 gap-4 mt-2 md:grid-cols-8'>
         {dummyData.map((data) => {
             return (
                 <ItemCard 
