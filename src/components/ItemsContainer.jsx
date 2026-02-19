@@ -1,29 +1,21 @@
 import ItemCard from './ItemCard'
-import { dummyData } from '../assets/items.jsx'
 
-const ItemsContainer = ({ items }) => {
+const ItemsContainer = ({ items, setItems, setItemDetails, setModalMode }) => {
   return (
     <div className='grid grid-cols-2 gap-4 mt-2 md:grid-cols-8'>
-        {dummyData.map((data) => {
-            return (
-                <ItemCard 
-                  groupName={data.groupName} 
-                  itemName={data.itemName} 
-                  retailPrice={data.retailPrice} 
-                  wholesalePrice={data.wholesalePrice} 
-                  basePrice={data.basePrice} 
-                  key={data.id}/>
-            )
-        })}
         {items.map((item) => {
             return (
-                <ItemCard 
-                  groupName={item.groupName} 
-                  itemName={item.itemName} 
-                  retailPrice={item.retailPrice} 
-                  wholesalePrice={item.wholesalePrice} 
-                  basePrice={item.basePrice} 
-                  key={item.id}/>
+                <ItemCard itemDetails={{
+                  groupName: item.groupName,
+                  itemName: item.itemName,
+                  retailPrice: item.retailPrice,
+                  wholesalePrice: item.wholesalePrice,
+                  basePrice: item.basePrice,
+                  itemId: item.id,
+                }} 
+                setItems={setItems} key={item.id}
+                setItemDetails={setItemDetails}
+                setModalMode={setModalMode} />
             )
         })}
     </div>  

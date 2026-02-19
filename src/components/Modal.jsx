@@ -1,25 +1,7 @@
-import { useState, useRef } from "react"
+import { useRef } from "react"
 import Dropdown from "./Dropdown"
 
-const Modal = ({ items, setItems, groupName, setGroupName }) => {
-
-    const [itemName, setItemName] = useState('');
-    const [retailPrice, setRetailPrice] = useState(0);
-    const [wholesalePrice, setWholesalePrice] = useState(0);
-    const [basePrice, setBasePrice] = useState(0);
-
-    const itemNameInput = (e) => {
-        setItemName(e.target.value);
-    }
-    const retailPriceInput = (e) => {
-        setRetailPrice(e.target.value);
-    }
-    const wholesalePriceInput = (e) => {
-        setWholesalePrice(e.target.value);
-    }
-    const basePriceInput = (e) => {
-        setBasePrice(e.target.value);
-    }
+const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setModalMode }) => {
 
     const modalRef = useRef(null);
 
@@ -31,58 +13,76 @@ const Modal = ({ items, setItems, groupName, setGroupName }) => {
     }
 
     function addItem() {
-        console.log(savedItems);
-        
-        if(itemName !== '' && !savedItems.includes(itemName)) {
+        if(itemDetails.itemName !== '' && !savedItems.includes(itemDetails.itemName)) {
             setItems([...items, {
-                groupName: groupName,
-                itemName: itemName,
-                retailPrice: retailPrice,
-                wholesalePrice: wholesalePrice,
-                basePrice: basePrice,
+                groupName: 'test',
+                itemName: itemDetails.itemName,
+                retailPrice: itemDetails.retailPrice,
+                wholesalePrice: itemDetails.wholesalePrice,
+                basePrice: itemDetails.basePrice,
                 id: crypto.randomUUID(),
             }])
 
-            setItemName('');
-            setRetailPrice(0);
-            setWholesalePrice(0);
-            setBasePrice(0);
+            setItemDetails({...itemDetails, itemName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0})
             modalRef.current.click(); // closes the modal
-        } else if (savedItems.includes(itemName)) {
-            console.log('item is already added');
+        } else if (savedItems.includes(itemDetails.itemName)) {
+            console.log('item already added');    
+        }
+    }
+    function updateItem() {
+        setItems(previousItems => previousItems.map(item => { // loop through every item
+                if(item.id === itemDetails.itemId) { // if component id is == to the selected id, replace it
+                    return {...item, ...itemDetails} //copies the array of old items (...item) and replace with new values (...itemDetails) 
+                                                    // so instead of replacing the old with a new component, it only replace the values that has changed and merge it
+                } else { // if component id !== to the selected id, return the item without replacing it
+                    return item
+                }
+            }))
+        setItemDetails({...itemDetails, itemName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0})
+        modalRef.current.click(); // closes the modal
+    }
+
+    function handleSubmit() {
+        if(modalMode === 'Add') {
+            addItem();
+        } else if(modalMode === 'Update') {
+            updateItem();
         }
     }
 
     return (
         <>
-            <button className="btn bg-amber-400 text-black" onClick={() => document.getElementById('my_modal_3').showModal()}>Add New Item</button>
+            <button className="btn bg-amber-400 text-black" onClick={() => {
+                document.getElementById('my_modal_3').showModal()
+                setModalMode('Add')
+                }}>Add New Item</button>
             <dialog id="my_modal_3" className="modal">
                 <div className="modal-box">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" ref={modalRef}>✕</button>
                     </form>
-                    <h3 className="font-bold text-lg">Add Item</h3>
+                    <h3 className="font-bold text-lg">{modalMode} Item</h3>
                     <div className="my-2">
-                        <Dropdown groupName={groupName} setGroupName={setGroupName} dropdownName={'Group'}/>
+                        {/* <Dropdown groupName={groupName} setGroupName={setGroupName} dropdownName={'Group'}/> */}
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend font-medium">Item Name</legend>
-                            <input type="text" className="input w-full" placeholder="Type here" onChange={itemNameInput} value={itemName}/>
+                            <input type="text" className="input w-full" placeholder="Type here" onChange={(e) => setItemDetails({...itemDetails, itemName: e.target.value})} value={itemDetails.itemName}/>
                         </fieldset>
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend font-medium">Retail Price</legend>
-                            <input type="number" className="input w-full" onChange={retailPriceInput} value={retailPrice} />
+                            <input type="number" className="input w-full" onChange={(e) => setItemDetails({...itemDetails, retailPrice: e.target.value})} value={itemDetails.retailPrice} />
                         </fieldset>
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend font-medium">Wholesale Price</legend>
-                            <input type="number" className="input w-full" onChange={wholesalePriceInput} value={wholesalePrice} />
+                            <input type="number" className="input w-full" onChange={(e) => setItemDetails({...itemDetails, wholesalePrice: e.target.value})} value={itemDetails.wholesalePrice} />
                         </fieldset>
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend font-medium">Base Price</legend>
-                            <input type="number" className="input w-full"  onChange={basePriceInput} value={basePrice} />
+                            <input type="number" className="input w-full"  onChange={(e) => setItemDetails({...itemDetails, basePrice: e.target.value})} value={itemDetails.basePrice} />
                         </fieldset>
                     </div>
-                    <button className="btn bg-amber-400 text-black w-full" onClick={addItem}>Add Item</button>
+                    <button className="btn bg-amber-400 text-black w-full" onClick={handleSubmit}>{modalMode} Item</button>
                 </div>
             </dialog>
         </>
