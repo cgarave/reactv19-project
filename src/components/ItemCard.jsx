@@ -8,7 +8,6 @@ const ItemCard = ({ itemDetails, setItems, setItemDetails, setModalMode }) => {
         document.getElementById('my_modal_3').showModal()
         setModalMode('Update')
         setItemDetails({...itemDetails}) // passing the current component's details to itemDetails. When the modal is opened, the value will change
-        
     }
 
     return (

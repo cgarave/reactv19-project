@@ -33,6 +33,14 @@ export const dummyData = [
     },
     {
         groupName: 'softdrinks',
+        itemName: 'Coke 1.5L',
+        retailPrice: 80,
+        wholesalePrice: 75,
+        basePrice: 0,
+        id: crypto.randomUUID(),
+    },
+    {
+        groupName: 'softdrinks',
         itemName: 'RC Mega',
         retailPrice: 28,
         wholesalePrice: 250,
