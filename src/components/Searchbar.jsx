@@ -1,4 +1,14 @@
-const Searchbar = () => {
+const Searchbar = ({ setItems, newItem }) => {
+    const handleSearch = (e) => {
+        const input = e.target.value.toLowerCase();
+        if (input !== '') {
+            const filtered = newItem.filter(item => item.itemName.toLowerCase().includes(input))
+            setItems(filtered);
+            // setItems(prevItems => prevItems.filter(item => item.itemName.toLowerCase().includes(input)))
+        } else {
+            setItems(newItem);
+        }
+    }
     return (
         <label className="input w-full">
             <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -7,7 +17,7 @@ const Searchbar = () => {
                     <path d="m21 21-4.3-4.3"></path>
                 </g>
             </svg>
-            <input type="search" placeholder="Search" />
+            <input type="search" placeholder="Search" onChange={handleSearch} />
         </label>
     )
 }
