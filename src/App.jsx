@@ -12,7 +12,7 @@ export default function App () {
       return Object.values(item)[0]
     })
 
-    const [items, setItems] = useState([]); // a setter function that handles all the item details coming from modal and dummyData
+    const [items, setItems] = useState(newItem); // a setter function that handles all the item details coming from modal and dummyData
     const [modalMode, setModalMode] = useState('Add');
     const [itemDetails, setItemDetails] = useState({ // handles all the input elements of the Modal
         itemGroupName: '',
@@ -23,14 +23,14 @@ export default function App () {
         itemId: '',
     })
 
-    useEffect(() => {
-        const testDataFromDB = async () => {
-            const response = await fetch('https://simple-products-backend-chi.vercel.app/');
-            const data = await response.json()
-            setItems(data)
-        }
-        testDataFromDB()
-    }, [items])
+    // useEffect(() => {
+    //     const testDataFromDB = async () => {
+    //         const response = await fetch('https://simple-products-backend-chi.vercel.app/');
+    //         const data = await response.json()
+    //         setItems(data)
+    //     }
+    //     testDataFromDB()
+    // }, [items])
 
     return (
         <>

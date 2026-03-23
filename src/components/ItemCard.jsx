@@ -26,7 +26,6 @@ const ItemCard = ({ itemDetails, setItems, setItemDetails, setModalMode }) => {
                     <p>Wholesale: ₱{itemDetails.wholesalePrice}</p>
                     <p>Base: ₱{itemDetails.basePrice}</p>
                     <p>Category: {itemDetails.groupName}</p>
-                    <p>Id: {itemDetails.itemId}</p>
                 </div>
                 <div className="flex gap-x-2 mt-auto">
                     <button className="btn border border-blue-500 bg-blue-950 text-white font-normal text-xs flex-1" onClick={handleUpdate}>Update</button>
