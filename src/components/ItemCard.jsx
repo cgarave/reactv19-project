@@ -1,7 +1,14 @@
 const ItemCard = ({ itemDetails, setItems, setItemDetails, setModalMode }) => {
 
-    const handleDelete = () => {
-        setItems(prevItems => prevItems.filter(item => item.id !== itemDetails.itemId));
+    const handleDelete = async () => {
+        try {
+            await fetch(`https://simple-products-backend-chi.vercel.app/${itemDetails.itemId}`, {
+                method: 'DELETE',
+            })
+        } catch (err) {
+            console.log(err)
+        }
+        //setItems(prevItems => prevItems.filter(item => item._id !== itemDetails.itemId));
     };
 
     const handleUpdate = () => {
@@ -19,6 +26,7 @@ const ItemCard = ({ itemDetails, setItems, setItemDetails, setModalMode }) => {
                     <p>Wholesale: ₱{itemDetails.wholesalePrice}</p>
                     <p>Base: ₱{itemDetails.basePrice}</p>
                     <p>Category: {itemDetails.groupName}</p>
+                    <p>Id: {itemDetails.itemId}</p>
                 </div>
                 <div className="flex gap-x-2 mt-auto">
                     <button className="btn border border-blue-500 bg-blue-950 text-white font-normal text-xs flex-1" onClick={handleUpdate}>Update</button>

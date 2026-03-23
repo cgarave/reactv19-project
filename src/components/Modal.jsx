@@ -4,8 +4,9 @@ import Dropdown from "./Dropdown"
 const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setModalMode }) => {
 
     const modalRef = useRef(null);
-    const [selectedGroup, setSelectedGroup] = useState('softdrinks');
+    const [selectedGroup, setSelectedGroup] = useState('Drinks');
 
+    // Check if the item is already added
     let savedItems = []
     if(items.length > 0) {
         for(let i = 0; i < items.length; i++){
@@ -13,24 +14,43 @@ const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setMod
         }
     }
 
+    const addItemToDB = async (itemToAdd) => {
+        try {
+            await fetch('https://simple-products-backend-chi.vercel.app/addItem', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(itemToAdd),
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     function addItem() {
         if(itemDetails.itemName !== '' && !savedItems.includes(itemDetails.itemName)) {
-            setItems([...items, {
-                groupName: selectedGroup,
+            // setItems([...items, {
+            //     groupName: selectedGroup,
+            //     itemName: itemDetails.itemName,
+            //     retailPrice: itemDetails.retailPrice,
+            //     wholesalePrice: itemDetails.wholesalePrice,
+            //     basePrice: itemDetails.basePrice,
+            //     id: crypto.randomUUID(),
+            // }])
+            addItemToDB({groupName: selectedGroup,
                 itemName: itemDetails.itemName,
                 retailPrice: itemDetails.retailPrice,
                 wholesalePrice: itemDetails.wholesalePrice,
-                basePrice: itemDetails.basePrice,
-                id: crypto.randomUUID(),
-            }])
+                basePrice: itemDetails.basePrice,})
 
+            //reset input fields
             setItemDetails({...itemDetails, itemName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0})
-            setSelectedGroup('softdrinks');
+            setSelectedGroup('Drinks');
             modalRef.current.click(); // closes the modal
         } else if (savedItems.includes(itemDetails.itemName)) {
             console.log('item already added');    
         }
     }
+
     function updateItem() {
         setItems(previousItems => previousItems.map(item => { // loop through every item
                 if(item.id === itemDetails.itemId) { // if component id is == to the selected id, replace it
@@ -41,7 +61,7 @@ const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setMod
                 }
             }))
         setItemDetails({...itemDetails, itemName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0})
-        setSelectedGroup('softdrinks');
+        setSelectedGroup('Drinks');
         modalRef.current.click(); // closes the modal
     }
 
@@ -67,7 +87,7 @@ const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setMod
                     </form>
                     <h3 className="font-bold text-lg">{modalMode} Item</h3>
                     <div className="my-2">
-                        <Dropdown selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup} dropdownName={'Group'} dropdownContents={['Softdrinks', 'Liquor', 'Cigarettes', 'Canned Goods', 'Snacks and Biscuits', 'Noodles', 'Beverages', 'Soap and Detergents', 'Essentials', 'School Supplies', 'Others']} />
+                        <Dropdown selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup} dropdownName={'Group'} dropdownContents={['Drinks', 'Liquor', 'Cigarettes', 'Canned Goods', 'Snacks and Biscuits', 'Noodles', 'Beverages', 'Soap and Detergents', 'Essentials', 'School Supplies', 'Others']} />
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend font-medium">Item Name</legend>
                             <input type="text" className="input w-full" placeholder="Type here" onChange={(e) => setItemDetails({...itemDetails, itemName: e.target.value})} value={itemDetails.itemName}/>

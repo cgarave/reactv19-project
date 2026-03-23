@@ -4,6 +4,7 @@ const Searchbar = ({ setItems, newItem }) => {
         if (input !== '') {
             const filtered = newItem.filter(item => item.itemName.toLowerCase().includes(input))
             setItems(filtered);
+
             // setItems(prevItems => prevItems.filter(item => item.itemName.toLowerCase().includes(input)))
         } else {
             setItems(newItem);
