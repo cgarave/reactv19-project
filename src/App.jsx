@@ -58,7 +58,6 @@ export default function App () {
         }
         testDataFromDB()
     }, [items]) //add items to dependency array before deploying
-
     return (
         <>
             <div className='flex flex-row gap-2'>

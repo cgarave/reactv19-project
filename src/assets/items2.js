@@ -648,7 +648,7 @@ export const dummyData = [
             {
                 groupName: 'canned-goods',
                 itemName: 'Chinese Luncheon Meat',
-                retailPrice: 0,
+                retailPrice: 90,
                 wholesalePrice: 0,
                 basePrice: 0,
                 id: crypto.randomUUID(),
@@ -656,7 +656,7 @@ export const dummyData = [
             {
                 groupName: 'canned-goods',
                 itemName: 'PureFoods Chicken Luncheon',
-                retailPrice: 0,
+                retailPrice: 88,
                 wholesalePrice: 0,
                 basePrice: 0,
                 id: crypto.randomUUID(),

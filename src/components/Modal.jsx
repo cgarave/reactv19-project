@@ -83,20 +83,68 @@ const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setMod
             setSelectedGroup('drinks');
             modalRef.current.click(); // closes the modal
         } else if (savedItems.includes(itemDetails.itemName)) {
-            console.log('item already added');    
+            console.log('item already added');
         }
     }
 
-    function updateItem() {
-        setItems(previousItems => previousItems.map(item => { // loop through every item
-                if(item.id === itemDetails.itemId) { // if component id is == to the selected id, replace it
-                    return {...item, ...itemDetails, groupName: selectedGroup} //copies the array of old items (...item) and replace with new values (...itemDetails, groupName: selectedGroup)
-                                                    // so instead of replacing the old with a new component, it only replaces the values that has changed and merge it
-                } else { // if component id !== to the selected id, return the item without replacing it
-                    return item
-                }
-            }))
-        setItemDetails({...itemDetails, itemName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0})
+    const updateItemToDB = async (itemToAdd) => {
+        try {
+            await fetch(`https://simple-products-backend-chi.vercel.app/${itemDetails.itemId}`, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(itemToAdd),
+            })
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    async function updateItem() {
+        // setItems(previousItems => previousItems.map(item => { // loop through every item
+        //         if(item.id === itemDetails.itemId) { // if component id is == to the selected id, replace it
+        //             return {...item, ...itemDetails, groupName: selectedGroup} //copies the array of old items (...item) and replace with new values (...itemDetails, groupName: selectedGroup)
+        //                                             // so instead of replacing the old with a new component, it only replaces the values that has changed and merge it
+        //         } else { // if component id !== to the selected id, return the item without replacing it
+        //             return item
+        //         }
+        //     }))
+        // setItemDetails({...itemDetails, itemName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0})
+
+        updateItemToDB({
+            groupName: selectedGroup,
+            itemName: itemDetails.itemName,
+            variation1: {
+                variationName: itemDetails.variation1.variationName,
+                retailPrice: itemDetails.variation1.retailPrice,
+                wholesalePrice: itemDetails.variation1.wholesalePrice,
+                basePrice: itemDetails.variation1.basePrice,
+            },
+            variation2: {
+                variationName: itemDetails.variation2.variationName,
+                retailPrice: itemDetails.variation2.retailPrice,
+                wholesalePrice: itemDetails.variation2.wholesalePrice,
+                basePrice: itemDetails.variation2.basePrice,
+            },
+            variation3: {
+                variationName: itemDetails.variation3.variationName,
+                retailPrice: itemDetails.variation3.retailPrice,
+                wholesalePrice: itemDetails.variation3.wholesalePrice,
+                basePrice: itemDetails.variation3.basePrice,
+            },
+            variation4: {
+                variationName: itemDetails.variation4.variationName,
+                retailPrice: itemDetails.variation4.retailPrice,
+                wholesalePrice: itemDetails.variation4.wholesalePrice,
+                basePrice: itemDetails.variation4.basePrice,
+            },
+            variation5: {
+                variationName: itemDetails.variation5.variationName,
+                retailPrice: itemDetails.variation5.retailPrice,
+                wholesalePrice: itemDetails.variation5.wholesalePrice,
+                basePrice: itemDetails.variation5.basePrice,
+            }
+        })
+
         setSelectedGroup('drinks');
         modalRef.current.click(); // closes the modal
     }
