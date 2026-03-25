@@ -1,10 +1,23 @@
 import React, {useRef, useState} from "react"
 import Dropdown from "./Dropdown"
 
-const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setModalMode }) => {
+const Modal = ({    items,
+                    selectedGroup, setSelectedGroup,
+                    itemDetails, setItemDetails,
+                    modalMode, setModalMode }) => {
 
     const modalRef = useRef(null);
-    const [selectedGroup, setSelectedGroup] = useState('drinks');
+
+    const resetModal = () => {
+        setItemDetails({...itemDetails, itemName: '',
+            variation1: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
+            variation2: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
+            variation3: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
+            variation4: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
+            variation5: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0}
+        })
+        setSelectedGroup('drinks');
+    }
 
     // Check if the item is already added
     let savedItems = []
@@ -73,14 +86,7 @@ const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setMod
             })
 
             //reset input fields
-            setItemDetails({...itemDetails, itemName: '',
-                variation1: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
-                variation2: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
-                variation3: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
-                variation4: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
-                variation5: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0}
-            })
-            setSelectedGroup('drinks');
+            resetModal();
             modalRef.current.click(); // closes the modal
         } else if (savedItems.includes(itemDetails.itemName)) {
             console.log('item already added');
@@ -145,7 +151,8 @@ const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setMod
             }
         })
 
-        setSelectedGroup('drinks');
+        //reset input fields
+        resetModal();
         modalRef.current.click(); // closes the modal
     }
 
@@ -167,7 +174,7 @@ const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setMod
                 <div className="modal-box">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" ref={modalRef}>✕</button>
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" ref={modalRef} onClick={resetModal}>✕</button>
                     </form>
                     <h3 className="font-bold text-lg">{modalMode} Item</h3>
                     <div className="my-2">

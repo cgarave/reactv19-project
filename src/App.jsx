@@ -14,6 +14,7 @@ export default function App () {
 
     const [items, setItems] = useState([]); // a setter function that handles all the item details coming from modal and dummyData
     const [modalMode, setModalMode] = useState('Add');
+    const [selectedGroup, setSelectedGroup] = useState('drinks');
     const [itemDetails, setItemDetails] = useState({ // handles all the input elements of the Modal
         itemGroupName: '',
         itemName: '',
@@ -62,14 +63,16 @@ export default function App () {
         <>
             <div className='flex flex-row gap-2'>
                 <Searchbar items={items} setItems={setItems}/>
-                <Modal items={items} setItems={setItems}
+                <Modal items={items}
+                       selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup}
                        itemDetails={itemDetails} setItemDetails={setItemDetails}
                        modalMode={modalMode} setModalMode={setModalMode} />
             </div>
             {/*<Dropdown itemDetails={itemDetails} setItemDetails={setItemDetails} dropdownName={'Sort products'} dropdownContents={['All', 'Softdrinks', 'Liquor', 'Cigarettes', 'Canned Goods', 'Snacks and Biscuits', 'Noodles', 'Beverages', 'Soap and Detergents', 'Essentials', 'School Supplies', 'Others']} />*/}
             <ItemsContainer items={items}
                             setItemDetails={setItemDetails}
-                            setModalMode={setModalMode}/>
+                            setModalMode={setModalMode}
+                            selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup}/>
         </>
     )
 }

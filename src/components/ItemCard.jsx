@@ -1,4 +1,4 @@
-const ItemCard = ({ itemDetails, setItemDetails, setModalMode }) => {
+const ItemCard = ({ itemDetails, setItemDetails, setModalMode, selectedGroup, setSelectedGroup }) => {
 
     const handleDelete = async () => {
         try {
@@ -14,6 +14,7 @@ const ItemCard = ({ itemDetails, setItemDetails, setModalMode }) => {
     const handleUpdate = () => {
         document.getElementById('my_modal_3').showModal()
         setModalMode('Update')
+        setSelectedGroup(itemDetails.groupName)
         setItemDetails({...itemDetails}) // passing the current component's details to itemDetails. When the modal is opened, the value will change
     }
     // Note: These variations can be refactored into map render just like in ItemsContainer component

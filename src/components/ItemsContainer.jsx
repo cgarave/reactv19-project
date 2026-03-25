@@ -1,6 +1,6 @@
 import ItemCard from './ItemCard'
 
-const ItemsContainer = ({ items, setItemDetails, setModalMode }) => {
+const ItemsContainer = ({ items, setItemDetails, setModalMode, selectedGroup, setSelectedGroup }) => {
   return (
     <div className='grid grid-cols-2 gap-4 mt-2 md:grid-cols-6'>
         {items.map((item) => {
@@ -43,7 +43,9 @@ const ItemsContainer = ({ items, setItemDetails, setModalMode }) => {
                 }} 
                 key={item._id}
                 setItemDetails={setItemDetails}
-                setModalMode={setModalMode} />
+                setModalMode={setModalMode}
+                selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup}
+                />
             )
         })}
     </div>  
