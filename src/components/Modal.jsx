@@ -4,7 +4,7 @@ import Dropdown from "./Dropdown"
 const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setModalMode }) => {
 
     const modalRef = useRef(null);
-    const [selectedGroup, setSelectedGroup] = useState('Drinks');
+    const [selectedGroup, setSelectedGroup] = useState('drinks');
 
     // Check if the item is already added
     let savedItems = []
@@ -36,15 +36,51 @@ const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setMod
             //     basePrice: itemDetails.basePrice,
             //     id: crypto.randomUUID(),
             // }])
-            addItemToDB({groupName: selectedGroup,
+
+            addItemToDB({
+                groupName: selectedGroup,
                 itemName: itemDetails.itemName,
-                retailPrice: itemDetails.retailPrice,
-                wholesalePrice: itemDetails.wholesalePrice,
-                basePrice: itemDetails.basePrice,})
+                variation1: {
+                    variationName: itemDetails.variation1.variationName,
+                    retailPrice: itemDetails.variation1.retailPrice,
+                    wholesalePrice: itemDetails.variation1.wholesalePrice,
+                    basePrice: itemDetails.variation1.basePrice,
+                },
+                variation2: {
+                    variationName: itemDetails.variation2.variationName,
+                    retailPrice: itemDetails.variation2.retailPrice,
+                    wholesalePrice: itemDetails.variation2.wholesalePrice,
+                    basePrice: itemDetails.variation2.basePrice,
+                },
+                variation3: {
+                    variationName: itemDetails.variation3.variationName,
+                    retailPrice: itemDetails.variation3.retailPrice,
+                    wholesalePrice: itemDetails.variation3.wholesalePrice,
+                    basePrice: itemDetails.variation3.basePrice,
+                },
+                variation4: {
+                    variationName: itemDetails.variation4.variationName,
+                    retailPrice: itemDetails.variation4.retailPrice,
+                    wholesalePrice: itemDetails.variation4.wholesalePrice,
+                    basePrice: itemDetails.variation4.basePrice,
+                },
+                variation5: {
+                    variationName: itemDetails.variation5.variationName,
+                    retailPrice: itemDetails.variation5.retailPrice,
+                    wholesalePrice: itemDetails.variation5.wholesalePrice,
+                    basePrice: itemDetails.variation5.basePrice,
+                }
+            })
 
             //reset input fields
-            setItemDetails({...itemDetails, itemName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0})
-            setSelectedGroup('Drinks');
+            setItemDetails({...itemDetails, itemName: '',
+                variation1: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
+                variation2: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
+                variation3: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
+                variation4: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0},
+                variation5: {variationName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0}
+            })
+            setSelectedGroup('drinks');
             modalRef.current.click(); // closes the modal
         } else if (savedItems.includes(itemDetails.itemName)) {
             console.log('item already added');    
@@ -61,7 +97,7 @@ const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setMod
                 }
             }))
         setItemDetails({...itemDetails, itemName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0})
-        setSelectedGroup('Drinks');
+        setSelectedGroup('drinks');
         modalRef.current.click(); // closes the modal
     }
 
@@ -92,18 +128,156 @@ const Modal = ({ items, setItems, itemDetails, setItemDetails, modalMode, setMod
                             <legend className="fieldset-legend font-medium">Item Name</legend>
                             <input type="text" className="input w-full" placeholder="Type here" onChange={(e) => setItemDetails({...itemDetails, itemName: e.target.value})} value={itemDetails.itemName}/>
                         </fieldset>
-                        <fieldset className="fieldset">
-                            <legend className="fieldset-legend font-medium">Retail Price</legend>
-                            <input type="number" className="input w-full" onChange={(e) => setItemDetails({...itemDetails, retailPrice: e.target.value})} value={itemDetails.retailPrice} />
-                        </fieldset>
-                        <fieldset className="fieldset">
-                            <legend className="fieldset-legend font-medium">Wholesale Price</legend>
-                            <input type="number" className="input w-full" onChange={(e) => setItemDetails({...itemDetails, wholesalePrice: e.target.value})} value={itemDetails.wholesalePrice} />
-                        </fieldset>
-                        <fieldset className="fieldset">
-                            <legend className="fieldset-legend font-medium">Base Price</legend>
-                            <input type="number" className="input w-full"  onChange={(e) => setItemDetails({...itemDetails, basePrice: e.target.value})} value={itemDetails.basePrice} />
-                        </fieldset>
+                        <div className="collapse bg-base-200 border-base-200 border my-2 collapse-arrow">
+                            <input type="checkbox" />
+                            <div className="collapse-title font-medium text-sm">Variation 1</div>
+                            <div className="collapse-content text-sm grid grid-cols-2 gap-x-2 px-4">
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Variation 1 Name</legend>
+                                    <input type="text" className="input w-full" placeholder="Type here"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation1: {...itemDetails.variation1, variationName: e.target.value}})}
+                                           value={itemDetails.variation1.variationName}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Retail Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation1: {...itemDetails.variation1, retailPrice: e.target.value}})}
+                                           value={itemDetails.variation1.retailPrice}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Wholesale Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation1: {...itemDetails.variation1, wholesalePrice: e.target.value}})}
+                                           value={itemDetails.variation1.wholesalePrice}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Base Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation1: {...itemDetails.variation1, basePrice: e.target.value}})}
+                                           value={itemDetails.variation1.basePrice}/>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div className="collapse bg-base-200 border-base-200 border my-2 collapse-arrow">
+                            <input type="checkbox" />
+                            <div className="collapse-title font-medium text-sm">Variation 2</div>
+                            <div className="collapse-content text-sm grid grid-cols-2 gap-x-2 px-4">
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Variation 2 Name</legend>
+                                    <input type="text" className="input w-full" placeholder="Type here"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation2: {...itemDetails.variation2, variationName: e.target.value}})}
+                                           value={itemDetails.variation2.variationName}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Retail Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation2: {...itemDetails.variation2, retailPrice: e.target.value}})}
+                                           value={itemDetails.variation2.retailPrice}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Wholesale Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation2: {...itemDetails.variation2, wholesalePrice: e.target.value}})}
+                                           value={itemDetails.variation2.wholesalePrice}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Base Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation2: {...itemDetails.variation2, basePrice: e.target.value}})}
+                                           value={itemDetails.variation2.basePrice}/>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div className="collapse bg-base-200 border-base-200 border my-2 collapse-arrow">
+                            <input type="checkbox" />
+                            <div className="collapse-title font-medium text-sm">Variation 3</div>
+                            <div className="collapse-content text-sm grid grid-cols-2 gap-x-2 px-4">
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Variation 3 Name</legend>
+                                    <input type="text" className="input w-full" placeholder="Type here"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation3: {...itemDetails.variation3, variationName: e.target.value}})}
+                                           value={itemDetails.variation3.variationName}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Retail Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation3: {...itemDetails.variation3, retailPrice: e.target.value}})}
+                                           value={itemDetails.variation3.retailPrice}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Wholesale Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation3: {...itemDetails.variation3, wholesalePrice: e.target.value}})}
+                                           value={itemDetails.variation3.wholesalePrice}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Base Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation3: {...itemDetails.variation3, basePrice: e.target.value}})}
+                                           value={itemDetails.variation3.basePrice}/>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div className="collapse bg-base-200 border-base-200 border my-2 collapse-arrow">
+                            <input type="checkbox" />
+                            <div className="collapse-title font-medium text-sm">Variation 4</div>
+                            <div className="collapse-content text-sm grid grid-cols-2 gap-x-2 px-4">
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Variation 4 Name</legend>
+                                    <input type="text" className="input w-full" placeholder="Type here"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation4: {...itemDetails.variation4, variationName: e.target.value}})}
+                                           value={itemDetails.variation4.variationName}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Retail Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation4: {...itemDetails.variation4, retailPrice: e.target.value}})}
+                                           value={itemDetails.variation4.retailPrice}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Wholesale Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation4: {...itemDetails.variation4, wholesalePrice: e.target.value}})}
+                                           value={itemDetails.variation4.wholesalePrice}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Base Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation4: {...itemDetails.variation4, basePrice: e.target.value}})}
+                                           value={itemDetails.variation4.basePrice}/>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div className="collapse bg-base-200 border-base-200 border my-2 collapse-arrow">
+                            <input type="checkbox" />
+                            <div className="collapse-title font-medium text-sm">Variation 5</div>
+                            <div className="collapse-content text-sm grid grid-cols-2 gap-x-2 px-4">
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Variation 5 Name</legend>
+                                    <input type="text" className="input w-full" placeholder="Type here"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation5: {...itemDetails.variation5, variationName: e.target.value}})}
+                                           value={itemDetails.variation5.variationName}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Retail Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation5: {...itemDetails.variation5, retailPrice: e.target.value}})}
+                                           value={itemDetails.variation5.retailPrice}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Wholesale Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation5: {...itemDetails.variation5, wholesalePrice: e.target.value}})}
+                                           value={itemDetails.variation5.wholesalePrice}/>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend font-medium">Base Price</legend>
+                                    <input type="number" className="input w-full"
+                                           onChange={(e) => setItemDetails({...itemDetails, variation5: {...itemDetails.variation5, basePrice: e.target.value}})}
+                                           value={itemDetails.variation5.basePrice}/>
+                                </fieldset>
+                            </div>
+                        </div>
                     </div>
                     <button className="btn bg-amber-400 text-black w-full" onClick={handleSubmit}>{modalMode} Item</button>
                 </div>

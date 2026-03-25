@@ -12,38 +12,65 @@ export default function App () {
       return Object.values(item)[0]
     })
 
-    const [items, setItems] = useState(newItem); // a setter function that handles all the item details coming from modal and dummyData
+    const [items, setItems] = useState([]); // a setter function that handles all the item details coming from modal and dummyData
     const [modalMode, setModalMode] = useState('Add');
     const [itemDetails, setItemDetails] = useState({ // handles all the input elements of the Modal
         itemGroupName: '',
         itemName: '',
-        retailPrice: 0,
-        wholesalePrice: 0,
-        basePrice: 0,
         itemId: '',
+        variation1: {
+            variationName: '',
+            retailPrice: 0,
+            wholesalePrice: 0,
+            basePrice: 0,
+        },
+        variation2: {
+            variationName: '',
+            retailPrice: 0,
+            wholesalePrice: 0,
+            basePrice: 0,
+        },
+        variation3: {
+            variationName: '',
+            retailPrice: 0,
+            wholesalePrice: 0,
+            basePrice: 0,
+        },
+        variation4: {
+            variationName: '',
+            retailPrice: 0,
+            wholesalePrice: 0,
+            basePrice: 0,
+        },
+        variation5: {
+            variationName: '',
+            retailPrice: 0,
+            wholesalePrice: 0,
+            basePrice: 0,
+        }
     })
 
-    // useEffect(() => {
-    //     const testDataFromDB = async () => {
-    //         const response = await fetch('https://simple-products-backend-chi.vercel.app/');
-    //         const data = await response.json()
-    //         setItems(data)
-    //     }
-    //     testDataFromDB()
-    // }, [items])
+    useEffect(() => {
+        const testDataFromDB = async () => {
+            const response = await fetch('https://simple-products-backend-chi.vercel.app/');
+            const data = await response.json()
+            setItems(data);
+        }
+        testDataFromDB()
+    }, [items]) //add items to dependency array before deploying
 
     return (
         <>
             <div className='flex flex-row gap-2'>
-                <Searchbar setItems={setItems} newItem={newItem}/>
+                <Searchbar items={items} setItems={setItems}/>
                 <Modal items={items} setItems={setItems}
                        itemDetails={itemDetails} setItemDetails={setItemDetails}
                        modalMode={modalMode} setModalMode={setModalMode} />
             </div>
             {/*<Dropdown itemDetails={itemDetails} setItemDetails={setItemDetails} dropdownName={'Sort products'} dropdownContents={['All', 'Softdrinks', 'Liquor', 'Cigarettes', 'Canned Goods', 'Snacks and Biscuits', 'Noodles', 'Beverages', 'Soap and Detergents', 'Essentials', 'School Supplies', 'Others']} />*/}
-            <ItemsContainer items={items} setItems={setItems}
+            <ItemsContainer items={items}
                             setItemDetails={setItemDetails}
-                            setModalMode={setModalMode} />
+                            setModalMode={setModalMode}/>
         </>
     )
 }
