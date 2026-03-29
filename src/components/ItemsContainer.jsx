@@ -1,8 +1,13 @@
 import ItemCard from './ItemCard'
+// import { RowComponentProps} from "react-window";
 
-const ItemsContainer = ({ items, setItemDetails, setModalMode, selectedGroup, setSelectedGroup }) => {
+// function RowComponent({ item, index, ...rest }) {
+//
+// }
+
+const ItemsContainer = ({ items, setItemDetails, setModalMode, selectedGroup, setSelectedGroup, testDataFromDB }) => {
   return (
-    <div className='grid grid-cols-2 gap-4 mt-2 md:grid-cols-6'>
+    <div className='grid grid-cols-1 gap-4 mt-2 md:grid-cols-6'>
         {items.map((item) => {
             return (
                 <ItemCard
@@ -45,6 +50,7 @@ const ItemsContainer = ({ items, setItemDetails, setModalMode, selectedGroup, se
                 setItemDetails={setItemDetails}
                 setModalMode={setModalMode}
                 selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup}
+                testDataFromDB={testDataFromDB}
                 />
             )
         })}

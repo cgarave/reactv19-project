@@ -1,13 +1,13 @@
-const Searchbar = ({ items, setItems }) => {
+const Searchbar = ({ items, setItems, allItems }) => {
     const handleSearch = (e) => {
         const input = e.target.value.toLowerCase();
         if (input !== '') {
-            const filtered = items.filter(item => item.itemName.toLowerCase().includes(input))
+            const filtered = allItems.filter(item => item.itemName.toLowerCase().startsWith(input))
             setItems(filtered);
 
             // setItems(prevItems => prevItems.filter(item => item.itemName.toLowerCase().includes(input)))
         } else {
-            setItems(items);
+            setItems(allItems);
         }
     }
     return (

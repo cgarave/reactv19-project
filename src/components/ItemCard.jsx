@@ -1,10 +1,11 @@
-const ItemCard = ({ itemDetails, setItemDetails, setModalMode, selectedGroup, setSelectedGroup }) => {
+const ItemCard = ({ itemDetails, setItemDetails, setModalMode, selectedGroup, setSelectedGroup, testDataFromDB }) => {
 
     const handleDelete = async () => {
         try {
             await fetch(`https://simple-products-backend-chi.vercel.app/${itemDetails.itemId}`, {
                 method: 'DELETE',
             })
+            testDataFromDB();
         } catch (err) {
             console.log(err)
         }
@@ -83,7 +84,7 @@ const ItemCard = ({ itemDetails, setItemDetails, setModalMode, selectedGroup, se
                     </div>
                 </dialog>
             </div>
-            
+
         </div>
     )
 }

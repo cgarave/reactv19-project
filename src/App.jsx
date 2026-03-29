@@ -4,6 +4,7 @@ import ItemsContainer from './components/ItemsContainer'
 import Dropdown from './components/Dropdown'
 import Modal from './components/Modal'
 import { dummyData } from './assets/items2'
+import { List } from 'react-window'
 
 
 export default function App () {
@@ -12,6 +13,7 @@ export default function App () {
       return Object.values(item)[0]
     })
 
+    const [allItems, setAllItems] = useState([])
     const [items, setItems] = useState([]); // a setter function that handles all the item details coming from modal and dummyData
     const [modalMode, setModalMode] = useState('Add');
     const [selectedGroup, setSelectedGroup] = useState('drinks');
@@ -51,28 +53,36 @@ export default function App () {
         }
     })
 
-    useEffect(() => {
-        const testDataFromDB = async () => {
+    const testDataFromDB = async () => {
+        try {
             const response = await fetch('https://simple-products-backend-chi.vercel.app/');
             const data = await response.json()
             setItems(data);
+            setAllItems(data)
+        } catch (err) {
+            console.log(err)
         }
+    }
+
+    useEffect(() => {
         testDataFromDB()
-    }, [items]) //add items to dependency array before deploying
+    }, []) //add items to dependency array before deploying
     return (
         <>
             <div className='flex flex-row gap-2'>
-                <Searchbar items={items} setItems={setItems}/>
+                <Searchbar items={items} setItems={setItems} allItems={allItems} />
                 <Modal items={items}
                        selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup}
                        itemDetails={itemDetails} setItemDetails={setItemDetails}
-                       modalMode={modalMode} setModalMode={setModalMode} />
+                       modalMode={modalMode} setModalMode={setModalMode}
+                        testDataFromDB={testDataFromDB} />
             </div>
             {/*<Dropdown itemDetails={itemDetails} setItemDetails={setItemDetails} dropdownName={'Sort products'} dropdownContents={['All', 'Softdrinks', 'Liquor', 'Cigarettes', 'Canned Goods', 'Snacks and Biscuits', 'Noodles', 'Beverages', 'Soap and Detergents', 'Essentials', 'School Supplies', 'Others']} />*/}
             <ItemsContainer items={items}
                             setItemDetails={setItemDetails}
                             setModalMode={setModalMode}
-                            selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup}/>
+                            selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup}
+                            testDataFromDB={testDataFromDB}/>
         </>
     )
 }

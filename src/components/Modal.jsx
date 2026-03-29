@@ -1,10 +1,11 @@
-import React, {useRef, useState} from "react"
+import React, {useRef} from "react"
 import Dropdown from "./Dropdown"
 
 const Modal = ({    items,
                     selectedGroup, setSelectedGroup,
                     itemDetails, setItemDetails,
-                    modalMode, setModalMode }) => {
+                    modalMode, setModalMode,
+                    testDataFromDB}) => {
 
     const modalRef = useRef(null);
 
@@ -27,6 +28,7 @@ const Modal = ({    items,
         }
     }
 
+
     const addItemToDB = async (itemToAdd) => {
         try {
             await fetch('https://simple-products-backend-chi.vercel.app/addItem', {
@@ -40,6 +42,7 @@ const Modal = ({    items,
     }
 
     function addItem() {
+
         if(itemDetails.itemName !== '' && !savedItems.includes(itemDetails.itemName)) {
             // setItems([...items, {
             //     groupName: selectedGroup,
@@ -87,6 +90,7 @@ const Modal = ({    items,
 
             //reset input fields
             resetModal();
+            testDataFromDB();
             modalRef.current.click(); // closes the modal
         } else if (savedItems.includes(itemDetails.itemName)) {
             console.log('item already added');
@@ -153,6 +157,7 @@ const Modal = ({    items,
 
         //reset input fields
         resetModal();
+        testDataFromDB();
         modalRef.current.click(); // closes the modal
     }
 
