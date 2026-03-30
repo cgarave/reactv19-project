@@ -1,13 +1,9 @@
 import ItemCard from './ItemCard'
-// import { RowComponentProps} from "react-window";
 
-// function RowComponent({ item, index, ...rest }) {
-//
-// }
 
 const ItemsContainer = ({ items, setItemDetails, setModalMode, selectedGroup, setSelectedGroup, testDataFromDB }) => {
   return (
-    <div className='grid grid-cols-1 gap-4 mt-2 md:grid-cols-6'>
+    <div className='grid grid-cols-1 gap-4 mt-2 md:grid-cols-4'>
         {items.map((item) => {
             return (
                 <ItemCard

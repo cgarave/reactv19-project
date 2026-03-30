@@ -15,6 +15,7 @@ export default function App () {
 
     const [allItems, setAllItems] = useState([])
     const [items, setItems] = useState([]); // a setter function that handles all the item details coming from modal and dummyData
+    const [isSort, setIsSort] = useState(true)
     const [modalMode, setModalMode] = useState('Add');
     const [selectedGroup, setSelectedGroup] = useState('drinks');
     const [itemDetails, setItemDetails] = useState({ // handles all the input elements of the Modal
@@ -77,7 +78,11 @@ export default function App () {
                        modalMode={modalMode} setModalMode={setModalMode}
                         testDataFromDB={testDataFromDB} />
             </div>
-            {/*<Dropdown itemDetails={itemDetails} setItemDetails={setItemDetails} dropdownName={'Sort products'} dropdownContents={['All', 'Softdrinks', 'Liquor', 'Cigarettes', 'Canned Goods', 'Snacks and Biscuits', 'Noodles', 'Beverages', 'Soap and Detergents', 'Essentials', 'School Supplies', 'Others']} />*/}
+            <Dropdown setItems={setItems} allItems={allItems}
+                      selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup}
+                      isSort={isSort}
+                      dropdownName={'Sort products'}
+                      dropdownContents={['All', 'Drinks', 'Liquor', 'Cigarettes', 'Canned Goods', 'Snacks and Biscuits', 'Noodles', 'Beverages', 'Soap and Detergents', 'Essentials', 'School Supplies', 'Others']} />
             <ItemsContainer items={items}
                             setItemDetails={setItemDetails}
                             setModalMode={setModalMode}
