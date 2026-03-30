@@ -22,9 +22,11 @@ const ItemCard = ({ itemDetails, setItemDetails, setModalMode, selectedGroup, se
     return (
         <div className="card bg-base-300 card-sm sm:card-md shadow-sm overflow-hidden h-auto md:h-auto">
             <div className="card-body p-3">
-                <h2 className="card-title font-medium text-lg">{itemDetails.itemName}</h2>
-                <div className="flex flex-col gap-y-1">
-                    <p>Group: {itemDetails.groupName}</p>
+                <div className="flex flex-row justify-between items-center">
+                    <h2 className="card-title font-bold text-lg">{itemDetails.itemName}</h2>
+                    <div className="bg-violet-800 text-white text-[8px] font-semibold rounded-full px-2 py-1 w-fit">{itemDetails.groupName.toString().toUpperCase()}</div>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
                     <div className="flex flex-col gap-y-1 p-2 rounded-md bg-base-100">
                         <p className="font-semibold text-violet-800">Variation 1: {itemDetails.variation1.variationName}</p>
                         <p>Retail: ₱{itemDetails.variation1.retailPrice}</p>
