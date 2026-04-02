@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-const Dropdown = ({ setItems, allItems, selectedGroup, setSelectedGroup, isSort, dropdownName, dropdownContents }) => {
+const Dropdown = ({ setItems, allItems, selectedGroup, setSelectedGroup, dropdownName, dropdownContents }) => {
 
     function sortBy(value) {
         const filteredItems = allItems.filter(item => item.groupName.toLowerCase().includes(value.toLowerCase()));

@@ -1,7 +1,8 @@
 import React, {useRef} from "react"
 import Dropdown from "./Dropdown"
 
-const Modal = ({    items,
+const Modal = ({    items, setItems,
+                    allItems, setAllItems,
                     selectedGroup, setSelectedGroup,
                     itemDetails, setItemDetails,
                     modalMode, setModalMode,
@@ -42,17 +43,82 @@ const Modal = ({    items,
     }
 
     function addItem() {
-
         if(itemDetails.itemName !== '' && !savedItems.includes(itemDetails.itemName)) {
-            // setItems([...items, {
-            //     groupName: selectedGroup,
-            //     itemName: itemDetails.itemName,
-            //     retailPrice: itemDetails.retailPrice,
-            //     wholesalePrice: itemDetails.wholesalePrice,
-            //     basePrice: itemDetails.basePrice,
-            //     id: crypto.randomUUID(),
-            // }])
 
+            setAllItems([...allItems, {
+                groupName: selectedGroup,
+                itemName: itemDetails.itemName,
+                _id: crypto.randomUUID(),
+                variation1: {
+                    variationName: itemDetails.variation1.variationName,
+                    retailPrice: itemDetails.variation1.retailPrice,
+                    wholesalePrice: itemDetails.variation1.wholesalePrice,
+                    basePrice: itemDetails.variation1.basePrice,
+                },
+                variation2: {
+                    variationName: itemDetails.variation2.variationName,
+                    retailPrice: itemDetails.variation2.retailPrice,
+                    wholesalePrice: itemDetails.variation2.wholesalePrice,
+                    basePrice: itemDetails.variation2.basePrice,
+                },
+                variation3: {
+                    variationName: itemDetails.variation3.variationName,
+                    retailPrice: itemDetails.variation3.retailPrice,
+                    wholesalePrice: itemDetails.variation3.wholesalePrice,
+                    basePrice: itemDetails.variation3.basePrice,
+                },
+                variation4: {
+                    variationName: itemDetails.variation4.variationName,
+                    retailPrice: itemDetails.variation4.retailPrice,
+                    wholesalePrice: itemDetails.variation4.wholesalePrice,
+                    basePrice: itemDetails.variation4.basePrice,
+                },
+                variation5: {
+                    variationName: itemDetails.variation5.variationName,
+                    retailPrice: itemDetails.variation5.retailPrice,
+                    wholesalePrice: itemDetails.variation5.wholesalePrice,
+                    basePrice: itemDetails.variation5.basePrice,
+                }
+            }])
+
+            //setting items (not doing render)
+            setItems([...items, {
+                groupName: selectedGroup,
+                itemName: itemDetails.itemName,
+                _id: crypto.randomUUID(),
+                variation1: {
+                    variationName: itemDetails.variation1.variationName,
+                    retailPrice: itemDetails.variation1.retailPrice,
+                    wholesalePrice: itemDetails.variation1.wholesalePrice,
+                    basePrice: itemDetails.variation1.basePrice,
+                },
+                variation2: {
+                    variationName: itemDetails.variation2.variationName,
+                    retailPrice: itemDetails.variation2.retailPrice,
+                    wholesalePrice: itemDetails.variation2.wholesalePrice,
+                    basePrice: itemDetails.variation2.basePrice,
+                },
+                variation3: {
+                    variationName: itemDetails.variation3.variationName,
+                    retailPrice: itemDetails.variation3.retailPrice,
+                    wholesalePrice: itemDetails.variation3.wholesalePrice,
+                    basePrice: itemDetails.variation3.basePrice,
+                },
+                variation4: {
+                    variationName: itemDetails.variation4.variationName,
+                    retailPrice: itemDetails.variation4.retailPrice,
+                    wholesalePrice: itemDetails.variation4.wholesalePrice,
+                    basePrice: itemDetails.variation4.basePrice,
+                },
+                variation5: {
+                    variationName: itemDetails.variation5.variationName,
+                    retailPrice: itemDetails.variation5.retailPrice,
+                    wholesalePrice: itemDetails.variation5.wholesalePrice,
+                    basePrice: itemDetails.variation5.basePrice,
+                }
+            }])
+
+            // adding item to the database
             addItemToDB({
                 groupName: selectedGroup,
                 itemName: itemDetails.itemName,
@@ -90,7 +156,6 @@ const Modal = ({    items,
 
             //reset input fields
             resetModal();
-            testDataFromDB();
             modalRef.current.click(); // closes the modal
         } else if (savedItems.includes(itemDetails.itemName)) {
             console.log('item already added');
@@ -118,7 +183,22 @@ const Modal = ({    items,
         //             return item
         //         }
         //     }))
-        // setItemDetails({...itemDetails, itemName: '', retailPrice: 0, wholesalePrice: 0, basePrice: 0})
+
+        setAllItems(prevItems => prevItems.map(item => {
+            if(item._id === itemDetails.itemId) {
+                return {...item, ...itemDetails}
+            } else {
+                return item;
+            }
+        }));
+
+        setItems(prevItems => prevItems.map(item => {
+            if(item._id === itemDetails.itemId) {
+                return {...item, ...itemDetails}
+            } else {
+                return item;
+            }
+        }))
 
         updateItemToDB({
             groupName: selectedGroup,
@@ -157,7 +237,7 @@ const Modal = ({    items,
 
         //reset input fields
         resetModal();
-        testDataFromDB();
+        // testDataFromDB();
         modalRef.current.click(); // closes the modal
     }
 

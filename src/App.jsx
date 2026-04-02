@@ -15,9 +15,8 @@ export default function App () {
 
     const [allItems, setAllItems] = useState([])
     const [items, setItems] = useState([]); // a setter function that handles all the item details coming from modal and dummyData
-    const [isSort, setIsSort] = useState(true)
     const [modalMode, setModalMode] = useState('Add');
-    const [selectedGroup, setSelectedGroup] = useState('drinks');
+    const [selectedGroup, setSelectedGroup] = useState('all');
     const [itemDetails, setItemDetails] = useState({ // handles all the input elements of the Modal
         itemGroupName: '',
         itemName: '',
@@ -71,8 +70,9 @@ export default function App () {
     return (
         <>
             <div className='flex flex-row gap-2'>
-                <Searchbar items={items} setItems={setItems} allItems={allItems} />
-                <Modal items={items}
+                <Searchbar setItems={setItems} allItems={allItems} />
+                <Modal items={items} setItems={setItems}
+                       allItems={allItems} setAllItems={setAllItems}
                        selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup}
                        itemDetails={itemDetails} setItemDetails={setItemDetails}
                        modalMode={modalMode} setModalMode={setModalMode}
@@ -80,14 +80,13 @@ export default function App () {
             </div>
             <Dropdown setItems={setItems} allItems={allItems}
                       selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup}
-                      isSort={isSort}
                       dropdownName={'Sort products'}
                       dropdownContents={['All', 'Drinks', 'Liquor', 'Cigarettes', 'Canned Goods', 'Snacks and Biscuits', 'Noodles', 'Beverages', 'Soap and Detergents', 'Essentials', 'School Supplies', 'Others']} />
-            <ItemsContainer items={items}
+            <ItemsContainer items={items} setItems={setItems}
+                            setAllItems={setAllItems}
                             setItemDetails={setItemDetails}
                             setModalMode={setModalMode}
-                            selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup}
-                            testDataFromDB={testDataFromDB}/>
+                            setSelectedGroup={setSelectedGroup}/>
         </>
     )
 }

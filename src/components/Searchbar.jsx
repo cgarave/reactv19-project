@@ -1,4 +1,4 @@
-const Searchbar = ({ items, setItems, allItems }) => {
+const Searchbar = ({ setItems, allItems }) => {
     const handleSearch = (e) => {
         const input = e.target.value.toLowerCase();
         if (input !== '') {
