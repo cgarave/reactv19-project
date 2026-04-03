@@ -1,5 +1,14 @@
-const ItemCard = ({ setAllItems, setItems, itemDetails, setItemDetails, setModalMode, setSelectedGroup }) => {
-
+import { useRef, useEffect } from 'react';
+const ItemCard = ({ setAllItems, items, setItems, itemDetails, setItemDetails, setModalMode, setSelectedGroup }) => {
+    const ref = useRef(null);
+    useEffect(() => {
+        const parentElement = ref.current;
+        if (parentElement.children.length % 2 === 0) {
+            parentElement.lastChild.classList.remove('col-span-2')
+        } else if (parentElement.children.length % 2 === 1) {
+            parentElement.lastChild.classList.add('col-span-2')
+        }
+    }, [items]);
     const handleDelete = async () => {
         try {
             setAllItems(prevItems => prevItems.filter(item => item._id !== itemDetails.itemId)) // controls the data passed from the database (this resolves the issue of recurring of items after deletion)
@@ -33,7 +42,6 @@ const ItemCard = ({ setAllItems, setItems, itemDetails, setItemDetails, setModal
                 )
             }
         })
-
     }
 
     // Note: These variations can be refactored into map render just like in ItemsContainer component
@@ -44,14 +52,8 @@ const ItemCard = ({ setAllItems, setItems, itemDetails, setItemDetails, setModal
                     <h2 className="card-title font-bold text-lg">{itemDetails.itemName}</h2>
                     <div className="bg-violet-800 text-white text-[8px] font-semibold rounded-full px-2 py-1 w-fit">{itemDetails.groupName.toString().toUpperCase()}</div>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-2" ref={ref}>
                     {renderVariations()}
-                    {/*<div className="flex flex-col gap-y-1 p-2 rounded-md bg-base-100">*/}
-                    {/*    <p className="font-semibold text-violet-800">{itemDetails.variation1.variationName}</p>*/}
-                    {/*    <p>Retail: ₱{itemDetails.variation1.retailPrice}</p>*/}
-                    {/*    <p>Wholesale: ₱{itemDetails.variation1.wholesalePrice}</p>*/}
-                    {/*    <p>Base: ₱{itemDetails.variation1.basePrice}</p>*/}
-                    {/*</div>*/}
                 </div>
                 <div className="flex gap-x-2 mt-auto">
                     <button className="btn text-xs flex-1" onClick={handleUpdate}>Update</button>
