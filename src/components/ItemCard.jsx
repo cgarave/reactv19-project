@@ -2,12 +2,13 @@ import { useRef, useEffect } from 'react';
 const ItemCard = ({ setAllItems, items, setItems, itemDetails, setItemDetails, setModalMode, setSelectedGroup }) => {
     const ref = useRef(null);
     useEffect(() => {
+        //this can be done with state please update!!!
         const parentElement = ref.current;
-        if (parentElement.children.length % 2 === 0) {
-            parentElement.lastChild.classList.remove('col-span-2')
-        } else if (parentElement.children.length % 2 === 1) {
-            parentElement.lastChild.classList.add('col-span-2')
-        }
+        // if (parentElement.children.length % 2 === 0) {
+        //     parentElement.lastChild.classList.remove('col-span-2')
+        // } else if (parentElement.children.length % 2 === 1) {
+        //     parentElement.lastChild.classList.add('col-span-2')
+        // }
     }, [items]);
     const handleDelete = async () => {
         try {
